@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>(wip.af) i'm not really thinking about it</title>
+    <style>
+
+    html, body {
+      font-family: sans-serif;
+      background-color: rgb(255, 68, 112);
+    }
+
+    #you-know {
+      top: 0;
+      left: 0;
+      background-color: rgb(255, 68, 112);
+      width: 100%;
+      height: 100%;
+    }
+
+    #dont-watch-me-watch-tv {
+      font-size: 58pt;
+      font-family: sans-serif;
+      font-style: italic;
+      letter-spacing: -0.05em;
+      color: white;
+      display: block;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      height: 100px;
+      width: 400px;
+      margin-top: -50px;
+      margin-left: -200px;
+      text-shadow: 1px 0px 0px rgba(0, 0, 0, 1);
+    }
+
+    #dont-touch-me {
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    #best {
+      z-index:10;
+      position: fixed;
+      color: black;
+      bottom: 1em;
+      right: 1em;
+      font-size: 30pt;
+      display: inline-block;
+      line-height: 1.4em;
+      font-family: sans-serif;
+      padding: 0.25em 0.40em;
+      letter-spacing: -0.1em;
+      text-transform: lowercase;
+      font-style: italic;
+    }
+    #okok {
+      z-index:10;
+      position: absolute;
+      color: white;
+      bottom: 1em;
+      left: 1em;
+      display: inline-block;
+      background-color: rgb(255, 68, 112);
+      line-height: 1.4em;
+      font-family: sans-serif;
+      padding: 0.25em 0.40em;
+      letter-spacing: 0.125em;
+    }
+
+    .page {
+      border: solid 1px black;
+      box-shadow: 7px 4px 7px 5px rgba(0,0,0,0.44);
+      background: rgb(49, 120, 252);
+    }
+    </style>
+
+    <!-- what's the difference between you and me? -->
+    <script src="/three.min.js"></script>
+    <script src="/OBJLoader.js"></script>
+
+    <script src="/dat.gui.min.js"></script>
+    <script src="/stats.min.js"></script>
+    <script src="/svv.im.bundled.min.js"></script>
+
+  </head>
+  <body>
+    <div id="stats"></div>
+    <!-- <div id="you-know"> -->
+    <div id="best">yeah for sure</div>
+    <!-- <div id="dont-watch-me-watch-tv">maybe it'll be less complex next time</div> -->
+
+    <h1>Click here</h1>
+    <input type="button" value="preview" id="previewer">
+    <input id="seed" name="seed" value="0xACE">
+    <input type="checkbox" id="better-off-alone"><label for="better-off-alone">Better off alone</label>
+    <input type="checkbox" id="folding"><label for="folding">Folding Instructions</label>
+    <br><br>
+    <input type="button" value="generate" id="generator">
+
+    <br>
+
+    <h1>Preview</h1>
+    <canvas width="500" height="500" id="trax"></canvas>
+
+    <script>
+
+    function datGui() {
+
+      params = {
+        theta: 0.01,
+        rayleigh: 4.0,
+        turbidity: 4.9,
+        mieDirectionalG: 0.01,
+        mieCoefficient: 0.01,
+        luminance: 1.02,
+
+        theta: Math.PI,
+        color: "#202824",
+        emissive: "#000000",
+        specular: "#18163C",
+        shininess: 1.6,
+        reflectivity: 0,
+        "y": 17,
+        zapYa: 0.1,
+
+        // World positions
+        "theta": 0.001,
+        "fi": 0.001,
+
+        // ...
+        "time": 0.5,
+
+      };
+
+      var gui = new dat.GUI({load: JSON});
+      gui.remember(params);
+
+      return params;
+    }
+
+    window.addEventListener("load", function (ev) {
+
+      var el = document.getElementById("trax");
+
+      composition = new svv.App({el: el});
+
+      (function loop () {
+        composition.update();
+        composition.draw();
+        requestAnimationFrame(loop);
+      }());
+    });
+    </script>
+  </body>
+</html>
