@@ -9,6 +9,11 @@
       background-color: rgb(255, 68, 112);
     }
 
+    a {
+      color:rgb(152, 247, 109);
+      text-decoration: none;
+    }
+
     #you-know {
       top: 0;
       left: 0;
@@ -75,6 +80,29 @@
       box-shadow: 7px 4px 7px 5px rgba(0,0,0,0.44);
       background: rgb(49, 120, 252);
     }
+
+    #trax {
+      z-index: -1;
+      position: fixed;
+      left: 0;
+      top: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+
+    #menu-click {
+      z-index: 1;
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 40px;
+      color: rgb(152, 247, 109);
+      border: solid 10px rgb(152, 247, 109);
+      padding: 0.5em;
+      border-radius: 30px 10px 30px 10px;
+      font-style: italic;
+
+    }
     </style>
 
     <!-- what's the difference between you and me? -->
@@ -87,26 +115,11 @@
 
   </head>
   <body>
-    <div id="stats"></div>
-    <!-- <div id="you-know"> -->
-    <div id="best">yeah for sure</div>
-    <!-- <div id="dont-watch-me-watch-tv">maybe it'll be less complex next time</div> -->
-
-    <h1>Click here</h1>
-    <input type="button" value="preview" id="previewer">
-    <input id="seed" name="seed" value="0xACE">
-    <input type="checkbox" id="better-off-alone"><label for="better-off-alone">Better off alone</label>
-    <input type="checkbox" id="folding"><label for="folding">Folding Instructions</label>
-    <br><br>
-    <input type="button" value="generate" id="generator">
-
-    <br>
-
-    <h1>Preview</h1>
-    <canvas width="500" height="500" id="trax"></canvas>
+    <!-- ok -->
+    <header id="menu-click"><div><a href="menu.pdf">MENU</a></div></header>
+    <canvas width="1500" height="1500" id="trax"></canvas>
 
     <script>
-
     function datGui() {
 
       params = {
@@ -145,13 +158,21 @@
 
       var el = document.getElementById("trax");
 
-      composition = new svv.App({el: el});
+      var app = new svv.App({el: el});
 
       (function loop () {
-        composition.update();
-        composition.draw();
+        app.update();
+        app.draw();
         requestAnimationFrame(loop);
       }());
+
+      el.addEventListener("mousemove", function (ev) {
+        let w = el.clientWidth;
+        let h = el.clientHeight;
+        let x = 2 * ev.offsetX / w - 1.0;
+        let y = 1.0 - 2 * ev.offsetY / h;
+        app.move({"x": x, "y": y});
+      });
     });
     </script>
   </body>
