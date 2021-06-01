@@ -22,9 +22,9 @@ export class Basic3 {
     this.el = el;
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
-      75,
+      45,
       el.width/el.height,
-      0.1,
+      10.0,
       3000,
     );
   }

@@ -75,30 +75,49 @@ export class App extends Basic3 {
 
   generateCity() {
 
-    console.log(generateTexture(this.renderer));
+    let tex = generateTexture(this.renderer);
+
+    let floorMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(10.0, 10.0),
+      new THREE.MeshBasicMaterial({color: 0xFFFFFF}),
+    );
+
+    this.scene.add(floorMesh);
 
     for (let i = 0; i <= 20; i++) {
       for (let j = -10; j <= 10; j++) {
-        let w = 1;
-        let h = 5.0+Math.random() * 7;
         let x = 2 * i;
-        let y = h / 2;
         let z = 2 * j;
-        let geo = new THREE.BoxGeometry(w, h, w);
-        let mat = new THREE.MeshPhysicalMaterial({
-          "emissive": 0x4709AD,
-          "roughness": 0.5,
-        });
-        let mesh = new THREE.Mesh(geo, mat);
+        let mesh = this.generateBuilding(tex);
         mesh.position.set(x, 0, z);
         this.scene.add(mesh);
       }
     }
   }
 
-  move({x, y}) {
-    this.target.y = 0.0+y*6;
-    this.target.z = 0.0+x*6;
+  generateBuilding(tex) {
+
+    let w = 1;
+    let h = 5.0 + Math.random() * 7;
+    let geo = new THREE.BoxGeometry(w, h, w);
+
+    /*
+    geo.faceVertexUvs[0][2][0].set( 0, 0 );
+    geo.faceVertexUvs[0][2][1].set(0, 0);
+    geo.faceVertexUvs[0][2][2].set(0, 0);
+    geo.faceVertexUvs[0][2][3].set(0, 0);
+    */
+
+    let mat = new THREE.MeshLambertMaterial({
+      "map": tex,
+    });
+
+    return new THREE.Mesh(geo, mat);
+  }
+
+  move({ x, y }) {
+    this.target.y = 0.0 + y * 6;
+    this.target.z = 0.0 + x * 6;
   }
 
   update() {
@@ -108,8 +127,8 @@ export class App extends Basic3 {
     this.camera.lookAt(this.target);
 
     if (this.logo) {
-      let t = +new Date() / 1000.0;
-      this.logo.rotation.x = t;
+      // let t = +new Date() / 1000.0;
+      // this.logo.rotation.x = t;
     }
   }
 
