@@ -26,7 +26,7 @@ export class App extends Basic3 {
     dirLight.target.position.set(1, 0, 5);
     this.scene.add(dirLight);
     this.scene.add(dirLight.target);
-    this.scene.fog = new THREE.Fog(0x000000, 10, 60);
+    this.scene.fog = new THREE.Fog(0x003366, 10, 60);
 
     this.generateLogo();
 
@@ -83,8 +83,8 @@ export class App extends Basic3 {
   }
 
   move({x, y}) {
-    this.target.y = 0.0+y*3;
-    this.target.z = 0.0+x*3;
+    this.target.y = 0.0+y*6;
+    this.target.z = 0.0+x*6;
   }
 
   update() {
