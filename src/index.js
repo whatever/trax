@@ -42,8 +42,6 @@ export class App extends Basic3 {
 
     console.log("(>o_o)> damn...");
 
-    // this.generateCity();
-
     this.scene.add(new THREE.AmbientLight(0xDDDDDD, 0.1));
 
     let dirLight = new THREE.DirectionalLight(0xB72AC7, 0.2);
@@ -61,7 +59,7 @@ export class App extends Basic3 {
 
     this.center = new THREE.Vector3(0, 10, 0);
     this.target = new THREE.Vector3(20, 4, 0);
-    this.target = new THREE.Vector3(30, 10, 0);
+    this.target = new THREE.Vector3(20, 10, 0);
 
     this.generateNeon();
   }
@@ -70,9 +68,9 @@ export class App extends Basic3 {
 
     this.neons = [];
 
-    for (let i=0; i < 10; i++) {
+    for (let i=0; i < 20; i++) {
 
-      let x = 5*i;
+      let x = 5*i-20;
       let y = 12;
       let z = +5;
 
@@ -97,14 +95,14 @@ export class App extends Basic3 {
 
   generateLogo() {
 
-    let logoRenderTarget = new THREE.WebGLCubeRenderTarget(256, {
+    let logoRenderTarget = new THREE.WebGLCubeRenderTarget(1024, {
       format: THREE.RGBFormat,
       generateMipmaps: true,
       minFilter: THREE.LinearMipmapLinearFilter,
       encoding: THREE.sRGBEncoding,
     });
 
-    let logoCubeCamera = new THREE.CubeCamera(1, 10000, logoRenderTarget);
+    let logoCubeCamera = new THREE.CubeCamera(10, 1000, logoRenderTarget);
     this.logoCubeCamera  = logoCubeCamera;
 
     let scene = this.scene;
@@ -118,7 +116,7 @@ export class App extends Basic3 {
       let mat = new THREE.MeshBasicMaterial({
         envMap: logoRenderTarget.texture,
         combine: THREE.MultiplyOperation,
-        reflectivity: 0.9,
+        reflectivity: 1.0,
       });
       let mesh = new THREE.Mesh(geo, mat);
       logoCubeCamera.position.set(this.target.x, this.target.y, this.target.z);
@@ -126,7 +124,7 @@ export class App extends Basic3 {
       this.logo = mesh;
 
       this.logo = new THREE.Mesh(
-        new THREE.BoxGeometry(2, 2, 2, 10),
+        new THREE.SphereGeometry(2, 20),
         mat,
       );
 
