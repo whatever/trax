@@ -14,7 +14,6 @@ function RandomNumber(low, high) {
 function RandomColor() {
   let r = Math.random();
   let i = parseInt(r*(COLORS.length));
-  console.log(i);
   return COLORS[i];
 }
 
@@ -42,7 +41,7 @@ export class App extends Basic3 {
 
     console.log("(>o_o)> damn...");
 
-    this.scene.add(new THREE.AmbientLight(0xDDDDDD, 0.1));
+    this.scene.add(new THREE.AmbientLight(0xDDDDDD, 0.3));
 
     let dirLight = new THREE.DirectionalLight(0xB72AC7, 0.2);
     dirLight.position.set(0, 10, 0);
@@ -50,8 +49,6 @@ export class App extends Basic3 {
     this.scene.add(dirLight);
     this.scene.add(dirLight.target);
     this.scene.fog = new THREE.Fog(0x003366, 10, 60);
-
-    this.generateLogo();
 
     let pointLight = new THREE.PointLight(0xFFFFFF, 0.3);
     pointLight.position.set(0, 10, 0);
@@ -62,6 +59,8 @@ export class App extends Basic3 {
     this.target = new THREE.Vector3(20, 10, 0);
 
     this.generateNeon();
+    this.generateLogo();
+    this.generateAlley();
   }
 
   generateNeon() {
@@ -72,7 +71,7 @@ export class App extends Basic3 {
 
       let x = 5*i-20;
       let y = 12;
-      let z = +5;
+      let z = +10;
 
       let lhs = RandomNeonLight();
       lhs.rotation.x = Math.PI/2;
@@ -93,6 +92,25 @@ export class App extends Basic3 {
     }
   }
 
+  Plane(orientation) {
+    let g = new THREE.PlaneGeometry(400.0, 20.0, 10.0, 10.0);
+    let m = new THREE.MeshBasicMaterial({color: 0x333333, side: THREE.DoubleSide});
+    let mesh = new THREE.Mesh(g, m);
+    mesh.rotation.x = Math.PI/2;
+    return mesh;
+  }
+
+  generateAlley() {
+    this.alley = this.Plane({x: Math.PI/2});
+    this.alley.position.set(this.target.x, this.target.y-10.0, this.target.z);
+    this.scene.add(this.alley);
+
+    console.log("Alley generated.");
+  }
+
+  generateGround() {
+  }
+
   generateLogo() {
 
     let logoRenderTarget = new THREE.WebGLCubeRenderTarget(1024, {
@@ -102,7 +120,7 @@ export class App extends Basic3 {
       encoding: THREE.sRGBEncoding,
     });
 
-    let logoCubeCamera = new THREE.CubeCamera(10, 1000, logoRenderTarget);
+    let logoCubeCamera = new THREE.CubeCamera(1, 200, logoRenderTarget);
     this.logoCubeCamera  = logoCubeCamera;
 
     let scene = this.scene;
@@ -124,13 +142,20 @@ export class App extends Basic3 {
       this.logo = mesh;
 
       this.logo = new THREE.Mesh(
-        new THREE.SphereGeometry(2, 20),
+        new THREE.SphereGeometry(2, 200, 200),
         mat,
       );
 
       this.logo.position.set(this.target.x, this.target.y, this.target.z);
 
+
+      let g = new THREE.TorusGeometry(5.5, 0.2, 10, 100);
+      let m = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
+      this.ring = new THREE.Mesh(g, m);
+      this.ring.position.set(this.target.x, this.target.y, this.target.z);
+
       scene.add(this.logo);
+      scene.add(this.ring);
     }.bind(this));
   }
 
@@ -140,7 +165,7 @@ export class App extends Basic3 {
 
     let floorMesh = new THREE.Mesh(
       new THREE.PlaneGeometry(10.0, 10.0),
-      new THREE.MeshBasicMaterial({color: 0xFFFFFF}),
+      new THREE.MeshBasicMaterial({color: RandomColor()}),
     );
 
     this.scene.add(floorMesh);
@@ -177,8 +202,8 @@ export class App extends Basic3 {
   }
 
   move({ x, y }) {
-    this.target.y = 0.0 + y * 6;
-    this.target.z = 0.0 + x * 6;
+    // this.target.y = 0.0 + y * 6;
+    // this.target.z = 0.0 + x * 6;
   }
 
   update() {
@@ -194,14 +219,19 @@ export class App extends Basic3 {
       this.logo.rotation.x = -1*t;
       this.logo.rotation.y = +3*t;
       this.logo.rotation.z = -2*t;
+
+      let u = 3*t;
+      this.ring.rotation.x = -1*u;
+      this.ring.rotation.y = +3*u;
+      this.ring.rotation.z = -2*u;
       // let t = +new Date() / 1000.0;
       // this.logo.rotation.x = t;
     }
   }
 
   draw() {
-    this.renderer.render(this.scene, this.camera);
     this.logoCubeCamera.update(this.renderer, this.scene);
+    this.renderer.render(this.scene, this.camera);
   }
 }
 
