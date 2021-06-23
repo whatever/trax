@@ -1,4 +1,5 @@
 import {Basic3, basic3} from "../basics.js";
+import {GLTFLoader} from "./GLTFLoader.js";
 
 const COLORS = [
   0x1F51FF,
@@ -61,6 +62,22 @@ export class App extends Basic3 {
     this.generateNeon();
     this.generateLogo();
     this.generateAlley();
+
+    // console.log("<<<", THREE.OBJLoader);
+    // console.log(">>>", GLTFLoader);
+    this.generateSomething();
+  }
+
+  generateSomething() {
+    const loader = new GLTFLoader();
+    let scene = this.scene;
+    loader.load("./half-baked.gltf", (gltf) => {
+
+      gltf.scene.position.set(30, 5, 0);
+
+      scene.add(gltf.scene);
+      console.log("Loaded");
+    });
   }
 
   generateNeon() {
