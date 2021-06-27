@@ -1,5 +1,6 @@
 import {Basic3, basic3} from "../basics.js";
 import {GLTFLoader} from "./GLTFLoader.js";
+import {Glove} from "./glove.js";
 
 const COLORS = [
   0x1F51FF,
@@ -40,8 +41,6 @@ export class App extends Basic3 {
       3000,
     );
 
-    console.log("(>o_o)> damn...");
-
     this.scene.add(new THREE.AmbientLight(0xDDDDDD, 0.3));
 
     let dirLight = new THREE.DirectionalLight(0xB72AC7, 0.2);
@@ -60,21 +59,28 @@ export class App extends Basic3 {
     this.target = new THREE.Vector3(20, 10, 0);
 
     this.generateNeon();
-    this.generateLogo();
-    this.generateAlley();
 
-    // console.log("<<<", THREE.OBJLoader);
-    // console.log(">>>", GLTFLoader);
-    this.generateSomething();
+    // XXX: Re-ablet to display logo
+    // this.generateLogo();
+
+    // XXX: Re-ablet to display floor
+    // this.generateAlley();
+
+    // XXX: Re-enable to display baked lights
+    // this.generateSomething();
+
+    this.glove = new Glove(this.center);
+
+    this.scene.add(this.glove.mesh);
+
+    console.log("(>o_o)> damn...");
   }
 
   generateSomething() {
     const loader = new GLTFLoader();
     let scene = this.scene;
     loader.load("./half-baked.gltf", (gltf) => {
-
       gltf.scene.position.set(30, 5, 0);
-
       scene.add(gltf.scene);
       console.log("Loaded");
     });
@@ -232,6 +238,10 @@ export class App extends Basic3 {
 
     // this.neons[0].rotation.x = t;
 
+    if (this.glove) {
+      this.glove.update();
+    }
+
     if (this.logo) {
       this.logo.rotation.x = -1*t;
       this.logo.rotation.y = +3*t;
@@ -241,13 +251,13 @@ export class App extends Basic3 {
       this.ring.rotation.x = -1*u;
       this.ring.rotation.y = +3*u;
       this.ring.rotation.z = -2*u;
-      // let t = +new Date() / 1000.0;
-      // this.logo.rotation.x = t;
     }
   }
 
   draw() {
-    this.logoCubeCamera.update(this.renderer, this.scene);
+    if (this.logoCubeCamera) {
+      this.logoCubeCamera.update(this.renderer, this.scene);
+    }
     this.renderer.render(this.scene, this.camera);
   }
 }
