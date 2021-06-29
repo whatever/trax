@@ -103,6 +103,14 @@
       font-style: italic;
 
     }
+
+    #wavvy {
+      max-height: 400px;
+      background-color: red;
+      position: fixed;
+      bottom: 1em;
+      right: 1em;
+    }
     </style>
 
     <!-- what's the difference between you and me? -->
@@ -118,6 +126,10 @@
     <!-- ok -->
     <header id="menu-click"><div><a href="menu.pdf">HOURS & MENU</a></div></header>
     <canvas width="1500" height="1500" id="trax"></canvas>
+
+    <video muted loop autoplay id="wavvy">
+      <source src="videos/IMG_2355.mp4">
+    </video>
 
     <script>
     function datGui() {
