@@ -33,13 +33,10 @@ export class App extends Basic3 {
     this.el = el;
     [this.ctx, this.renderer] = basic3(el)
     this.renderer.setClearColor(0x000000);
+
+    this.resize(window.innerWidth, window.innerHeight);
+
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(
-      75,
-      el.width/el.height,
-      0.1,
-      3000,
-    );
 
     this.scene.add(new THREE.AmbientLight(0xDDDDDD, 0.3));
 
@@ -227,6 +224,24 @@ export class App extends Basic3 {
   move({ x, y }) {
     // this.target.y = 0.0 + y * 6;
     // this.target.z = 0.0 + x * 6;
+  }
+  
+  resize(w, h) {
+    this.renderer.setSize(w, h);
+
+    this.camera = new THREE.PerspectiveCamera(
+      75,
+      w/h,
+      0.1,
+      3000,
+    );
+    console.log("(>x_x)> resized", w, h);
+  }
+
+  resizeFunction(container) {
+    return function() {
+      this.resize(window.innerWidth, window.innerHeight);
+    }.bind(this);
   }
 
   update() {

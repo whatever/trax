@@ -160,6 +160,8 @@
 
       var app = new svv.App({el: el});
 
+      window.addEventListener("resize", app.resizeFunction(el));
+
       (function loop () {
         app.update();
         app.draw();

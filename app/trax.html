@@ -86,8 +86,12 @@
       position: fixed;
       left: 0;
       top: 0;
+      width: 100%;
+      height: 100%;
+      /*
       min-width: 100%;
       min-height: 100%;
+      */
     }
 
     #menu-click {
@@ -118,7 +122,7 @@
   <body>
     <!-- ok -->
     <header id="menu-click"><div><a href="menu.pdf">MENU</a></div></header>
-    <canvas width="1200" height="1200" id="trax"></canvas>
+    <canvas width="1400" height="1200" id="trax"></canvas>
 
     <script>
     function datGui() {
@@ -160,6 +164,8 @@
       var el = document.getElementById("trax");
 
       var app = new svv.App({el: el});
+
+      window.addEventListener("resize", app.resizeFunction(el));
 
       (function loop () {
         app.update();
