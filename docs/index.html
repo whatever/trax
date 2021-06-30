@@ -121,13 +121,17 @@
   </head>
   <body>
 
+    <!--
     <video defaultMuted muted loop autoplay id="loader">
       <source src="videos/loading_300x300.mp4">
     </video>
+    -->
+    <img src="videos/loading.gif" id="loader">
 
     <!-- ok -->
     <header id="menu-click"><div><a href="menu.pdf">MENU</a></div></header>
-    <div id="side-panel"></div>
+    <div id="side-panel"><!-- <img src="videos/loading.gif"> --></div>
+
     <canvas width="1500" height="1500" id="trax"></canvas>
 
     <video defaultMuted muted loop autoplay id="wavvy">
@@ -140,7 +144,7 @@
     window.addEventListener("load", function (ev) {
 
       var loaded = new Date() - start;
-      var delay = Math.ceil(6-loaded, 0);
+      var delay = Math.ceil(6000-loaded, 0);
 
       console.log("Delaying ", delay);
 
