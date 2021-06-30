@@ -16,7 +16,10 @@
       font-family: sans-serif;
       padding: 0;
       margin: 0;
-      overflow: hidden;
+      box-sizing: border-box;
+      background-color: rgb(255, 68, 112);
+      background-color: blue;
+      min-height: -webkit-fill-available;
     }
 
     body {
@@ -43,17 +46,11 @@
     }
 
     #trax {
-      z-index: -1;
       position: fixed;
       left: 0;
       top: 0;
-
       height: 100%;
-      height: 100vh;
-
       width: 100%;
-      width: 100vw;
-
     }
 
     #menu-click a {
@@ -62,7 +59,7 @@
     }
 
     #menu-click {
-      z-index: 1;
+      z-index: 7;
       position: fixed;
       top: 10px;
       left: 10px;
@@ -79,6 +76,7 @@
     }
 
     #side-panel {
+      z-index: 1;
       width: 20%;
       height: 100%;
       position: fixed;
@@ -153,7 +151,13 @@
 
         var app = new svv.App({el: el});
 
-        window.addEventListener("resize", app.resizeFunction(el));
+        var resizer = app.resizeFunction(el);
+
+        window.onresize = function () {
+          document.body.height = window.innerHeight;
+          resizer();
+        };
+        window.onresize();
 
         (function loop () {
           app.update();
