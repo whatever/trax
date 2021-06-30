@@ -115,7 +115,7 @@
   <body>
 
     <video defaultMuted muted loop autoplay id="loader">
-      <source src="videos/loading_600x600.mp4">
+      <source src="videos/loading_300x300.mp4">
     </video>
 
     <!-- ok -->
@@ -128,46 +128,12 @@
     </video>
 
     <script>
-    function datGui() {
-
-      params = {
-        theta: 0.01,
-        rayleigh: 4.0,
-        turbidity: 4.9,
-        mieDirectionalG: 0.01,
-        mieCoefficient: 0.01,
-        luminance: 1.02,
-
-        theta: Math.PI,
-        color: "#202824",
-        emissive: "#000000",
-        specular: "#18163C",
-        shininess: 1.6,
-        reflectivity: 0,
-        "y": 17,
-        zapYa: 0.1,
-
-        // World positions
-        "theta": 0.001,
-        "fi": 0.001,
-
-        // ...
-        "time": 0.5,
-
-      };
-
-      var gui = new dat.GUI({load: JSON});
-      gui.remember(params);
-
-      return params;
-    }
-
     var start = +new Date();
 
     window.addEventListener("load", function (ev) {
 
       var loaded = new Date() - start;
-      var delay = Math.ceil(3000-loaded, 0);
+      var delay = Math.ceil(6000-loaded, 0);
 
       console.log("Delaying ", delay);
 
