@@ -2,6 +2,14 @@
 <html>
   <head>
     <title>(wip.af) i'm not really thinking about it</title>
+
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+
+    <meta property="og:video" content="http://whatever.rip/videos/loading_600x600.mp4" />
+    <meta property="og:video:type" content="video/mp4" />
+    <meta property="og:video:width" content="600" />
+    <meta property="og:video:height" content="600" />
+
     <style>
 
     html, body {
@@ -10,7 +18,6 @@
     }
 
     a {
-      color:rgb(152, 247, 109);
       text-decoration: none;
     }
 
@@ -22,63 +29,12 @@
       height: 100%;
     }
 
-    #dont-watch-me-watch-tv {
-      font-size: 58pt;
-      font-family: sans-serif;
-      font-style: italic;
-      letter-spacing: -0.05em;
-      color: white;
-      display: block;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      height: 100px;
-      width: 400px;
-      margin-top: -50px;
-      margin-left: -200px;
-      text-shadow: 1px 0px 0px rgba(0, 0, 0, 1);
-    }
-
     #dont-touch-me {
       position: absolute;
       display: block;
       width: 100%;
       height: 100%;
       z-index: -1;
-    }
-    #best {
-      z-index:10;
-      position: fixed;
-      color: black;
-      bottom: 1em;
-      right: 1em;
-      font-size: 30pt;
-      display: inline-block;
-      line-height: 1.4em;
-      font-family: sans-serif;
-      padding: 0.25em 0.40em;
-      letter-spacing: -0.1em;
-      text-transform: lowercase;
-      font-style: italic;
-    }
-    #okok {
-      z-index:10;
-      position: absolute;
-      color: white;
-      bottom: 1em;
-      left: 1em;
-      display: inline-block;
-      background-color: rgb(255, 68, 112);
-      line-height: 1.4em;
-      font-family: sans-serif;
-      padding: 0.25em 0.40em;
-      letter-spacing: 0.125em;
-    }
-
-    .page {
-      border: solid 1px black;
-      box-shadow: 7px 4px 7px 5px rgba(0,0,0,0.44);
-      background: rgb(49, 120, 252);
     }
 
     #trax {
@@ -90,18 +46,35 @@
       min-height: 100%;
     }
 
+    #menu-click a {
+      color: rgb(152, 247, 109);
+      color: black;
+    }
+
     #menu-click {
       z-index: 1;
       position: fixed;
       top: 10px;
-      right: 10px;
+      left: 10px;
       font-size: 40px;
       color: rgb(152, 247, 109);
+
       border: solid 10px rgb(152, 247, 109);
+      border: solid 10px black;
+
       padding: 0.5em;
       border-radius: 30px 10px 30px 10px;
       font-style: italic;
 
+    }
+
+    #side-panel {
+      width: 20%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: rgba(255, 255, 255, 0.4);
     }
 
     #wavvy {
@@ -110,6 +83,21 @@
       position: fixed;
       bottom: 1em;
       right: 1em;
+    }
+
+    #loader {
+      z-index: 2;
+      position: absolute;
+      padding: 0;
+      margin: 0;
+      top: 0;
+      left: 0;
+      background-color: rgb(255, 68, 112);
+      width: 100%;
+      height: 100%;
+    }
+    video {
+      object-fit: cover;
     }
     </style>
 
@@ -123,12 +111,18 @@
 
   </head>
   <body>
+
+    <video defaultMuted muted loop autoplay id="loader">
+      <source src="videos/loading_600x600.mp4">
+    </video>
+
     <!-- ok -->
-    <header id="menu-click"><div><a href="menu.pdf">HOURS & MENU</a></div></header>
+    <header id="menu-click"><div><a href="menu.pdf">MENU</a></div></header>
+    <div id="side-panel"></div>
     <canvas width="1500" height="1500" id="trax"></canvas>
 
-    <video muted loop autoplay id="wavvy">
-      <source src="videos/IMG_2355.mp4">
+    <video defaultMuted muted loop autoplay id="wavvy">
+      <source src="videos/wavvy.mp4">
     </video>
 
     <script>
