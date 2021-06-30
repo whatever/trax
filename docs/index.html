@@ -160,27 +160,39 @@
       return params;
     }
 
+    var start = +new Date();
+
     window.addEventListener("load", function (ev) {
 
-      var el = document.getElementById("trax");
+      var loaded = new Date() - start;
+      var delay = Math.ceil(3000-loaded, 0);
 
-      var app = new svv.App({el: el});
+      console.log("Delaying ", delay);
 
-      window.addEventListener("resize", app.resizeFunction(el));
+      setTimeout(function () {
 
-      (function loop () {
-        app.update();
-        app.draw();
-        requestAnimationFrame(loop);
-      }());
+        document.getElementById("loader").remove();
 
-      el.addEventListener("mousemove", function (ev) {
-        let w = el.clientWidth;
-        let h = el.clientHeight;
-        let x = 2 * ev.offsetX / w - 1.0;
-        let y = 1.0 - 2 * ev.offsetY / h;
-        app.move({"x": x, "y": y});
-      });
+        var el = document.getElementById("trax");
+
+        var app = new svv.App({el: el});
+
+        window.addEventListener("resize", app.resizeFunction(el));
+
+        (function loop () {
+          app.update();
+          app.draw();
+          requestAnimationFrame(loop);
+        }());
+
+        el.addEventListener("mousemove", function (ev) {
+          let w = el.clientWidth;
+          let h = el.clientHeight;
+          let x = 2 * ev.offsetX / w - 1.0;
+          let y = 1.0 - 2 * ev.offsetY / h;
+          app.move({"x": x, "y": y});
+        });
+      }, delay);
     });
     </script>
   </body>
