@@ -1,3 +1,9 @@
+<!--
+
+
+
+
+-->
 <!DOCTYPE html>
 <html>
   <head>
@@ -5,11 +11,12 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta property="og:video" content="http://whatever.rip/videos/loading_600x600.mp4" />
+    <meta property="og:video" content="http://whatever.rip/videos/loading_300x300.mp4" />
     <meta property="og:video:type" content="video/mp4" />
-    <meta property="og:video:width" content="600" />
-    <meta property="og:video:height" content="600" />
+    <meta property="og:video:width" content="300" />
+    <meta property="og:video:height" content="300" />
 
+    <link href="normalize.css" rel="stylesheet" type="text/css">
     <style>
 
     html, body {
@@ -18,12 +25,7 @@
       margin: 0;
       box-sizing: border-box;
       background-color: rgb(255, 68, 112);
-      background-color: blue;
       background-color: black;
-      min-height: -webkit-fill-available;
-    }
-
-    body {
     }
 
     a {
@@ -56,11 +58,11 @@
 
     #menu-click a {
       color: rgb(152, 247, 109);
-      color: black;
+      /* color: black; */
     }
 
     #menu-click {
-      z-index: 7;
+      z-index: 69;
       position: fixed;
       top: 10px;
       left: 10px;
@@ -68,7 +70,7 @@
       color: rgb(152, 247, 109);
 
       border: solid 10px rgb(152, 247, 109);
-      border: solid 10px black;
+      /* border: solid 10px black; */
 
       padding: 0.5em;
       border-radius: 30px 10px 30px 10px;
@@ -84,6 +86,7 @@
       top: 0;
       left: 0;
       background-color: rgba(255, 255, 255, 0.4);
+      display: none;
     }
 
     #wavvy {
@@ -95,7 +98,7 @@
     }
 
     #loader {
-      z-index: 2;
+      z-index: 420;
       position: absolute;
       padding: 0;
       margin: 0;
@@ -114,19 +117,19 @@
     <script src="three.min.js"></script>
     <script src="OBJLoader.js"></script>
 
-    <script src="dat.gui.min.js"></script>
-    <script src="stats.min.js"></script>
+    <!-- <script src="dat.gui.min.js"></script> -->
+    <!-- <script src="stats.min.js"></script> -->
+
     <script src="svv.im.bundled.min.js"></script>
 
   </head>
   <body>
 
-    <!--
-    <video defaultMuted muted loop autoplay id="loader">
-      <source src="videos/loading_300x300.mp4">
+    <!-- Loading... -->
+    <video autoplay loop muted playsinline id="loader">
+      <source src="videos/loading_300x300.mp4" type="video/mp4">
+      <img src="videos/loading_again.gif">
     </video>
-    -->
-    <img src="videos/loading.gif" id="loader">
 
     <!-- ok -->
     <header id="menu-click"><div><a href="menu.pdf">MENU</a></div></header>
@@ -134,7 +137,7 @@
 
     <canvas width="1500" height="1500" id="trax"></canvas>
 
-    <video defaultMuted muted loop autoplay id="wavvy">
+    <video defaultMuted loop muted autoplay playsinline id="wavvy">
       <source src="videos/wavvy.mp4">
     </video>
 
@@ -166,7 +169,7 @@
 
         (function loop () {
           app.update();
-          app.draw();
+          // app.draw();
           requestAnimationFrame(loop);
         }());
 
