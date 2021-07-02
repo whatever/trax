@@ -2,6 +2,10 @@ import {Basic3, basic3} from "../basics.js";
 import {GLTFLoader} from "./GLTFLoader.js";
 import {Glove} from "./glove.js";
 
+import {LoadingSequence} from "./loading.js";
+
+export {LoadingSequence};
+
 const COLORS = [
   0x1F51FF,
   0xFE019A,

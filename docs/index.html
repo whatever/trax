@@ -105,6 +105,7 @@
       top: 0;
       left: 0;
       background-color: rgb(255, 68, 112);
+      background-color: black;
       width: 100%;
       height: 100%;
     }
@@ -125,11 +126,12 @@
   </head>
   <body>
 
-    <!-- Loading... -->
+    <!-- Loading...
     <video autoplay loop muted playsinline id="loader">
       <source src="videos/loading_300x300.mp4" type="video/mp4">
       <img src="videos/loading_again.gif">
     </video>
+    -->
 
     <!-- ok -->
     <header id="menu-click"><div><a href="menu.pdf">MENU</a></div></header>
@@ -142,6 +144,8 @@
     </video>
 
     <script>
+
+      svv.LoadingSequence();
     var start = +new Date();
 
     window.addEventListener("load", function (ev) {
