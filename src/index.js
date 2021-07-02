@@ -37,23 +37,22 @@ export class App extends Basic3 {
     this.el = el;
     [this.ctx, this.renderer] = basic3(el)
     this.renderer.setClearColor(0x000000);
-    this.renderer.physicallyCorrectLights = true
 
     this.resize(window.innerWidth, window.innerHeight);
 
     this.scene = new THREE.Scene();
 
-    this.scene.add(new THREE.AmbientLight(0xDDDDDD, 0.3));
+    this.scene.add(new THREE.AmbientLight(0xDDDDDD, 1.0));
 
-    let dirLight = new THREE.DirectionalLight(0xB72AC7, 0.2);
+    let dirLight = new THREE.DirectionalLight(0xB72AC7, 0.8);
     dirLight.position.set(0, 10, 0);
     dirLight.target.position.set(1, 0, 5);
     this.scene.add(dirLight);
     this.scene.add(dirLight.target);
     this.scene.fog = new THREE.Fog(0x003366, 10, 60);
 
-    let pointLight = new THREE.PointLight(0xFFFFFF, 0.3);
-    pointLight.position.set(0, 10, 0);
+    let pointLight = new THREE.PointLight(0xFFFFFF, 0.8);
+    pointLight.position.set(10, 10, 0);
     this.scene.add(pointLight);
 
     this.center = new THREE.Vector3(0, 10, 0);
@@ -92,9 +91,9 @@ export class App extends Basic3 {
 
     this.neons = [];
 
-    for (let i=0; i < 20; i++) {
+    for (let i=0; i < 80; i++) {
 
-      let x = 5*i-20;
+      let x = 1*i-20;
       let y = 12;
       let z = +10;
 
@@ -142,27 +141,26 @@ export class App extends Basic3 {
       format: THREE.RGBFormat,
       generateMipmaps: true,
       minFilter: THREE.LinearMipmapLinearFilter,
-      encoding: THREE.sRGBEncoding,
+      //encoding: THREE.sRGBEncoding,
     });
 
-    let logoCubeCamera = new THREE.CubeCamera(1, 200, logoRenderTarget);
+    let logoCubeCamera = new THREE.CubeCamera(0.5, 1000, logoRenderTarget);
     this.logoCubeCamera  = logoCubeCamera;
 
     let scene = this.scene;
     let loader = new THREE.FontLoader();
     let objLoader = new THREE.OBJLoader();
 
-    let mat = new THREE.MeshBasicMaterial({
-      color: 0xFFFFFF,
-      // envMap: logoRenderTarget.texture,
-
+    let mat = new THREE.MeshLambertMaterial({
+      color: 0xFFFF00,
+      envMap: logoRenderTarget.texture,
       // combine: THREE.MultiplyOperation,
-      reflectivity: 1.0,
+      // reflectivity: 1.0,
     });
 
-    let normalMat = new THREE.MeshNormalMaterial();
+    // let normalMat = new THREE.MeshNormalMaterial();
 
-    let basic = new THREE.MeshBasicMaterial({color: 0xFF0000});
+    // let basic = new THREE.MeshBasicMaterial({color: 0xFF0000});
 
     const gltfLoader = new GLTFLoader();
 
@@ -171,6 +169,8 @@ export class App extends Basic3 {
       gltf.scene.rotation.y = -Math.PI/2;
 
       gltf.scene.children[0].children.forEach((v) => {
+        v.geometry.computeVertexNormals();
+        v.geometry.computeFaceNormals();
         v.material = mat;
       });
 
@@ -266,7 +266,7 @@ export class App extends Basic3 {
   }
 
   draw() {
-    if (this.logoCubeCamera) {
+    if (this.thing && this.logoCubeCamera) {
       this.logoCubeCamera.update(this.renderer, this.scene);
     }
     this.renderer.render(this.scene, this.camera);
