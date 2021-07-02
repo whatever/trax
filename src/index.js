@@ -159,10 +159,10 @@ export class App extends Basic3 {
     });
 
     const material3 = new THREE.MeshPhongMaterial({
-      shininess: 10,
+      shininess: 1,
       color: 0xFFFFFF,
       specular: 0xFF4470,
-      reflectivity: 0.86,
+      reflectivity: 0.76,
       envMap: logoRenderTarget.texture,
     });
 
@@ -179,7 +179,9 @@ export class App extends Basic3 {
       gltf.scene.children[0].children.forEach((v) => {
         v.geometry.computeVertexNormals();
         v.geometry.computeFaceNormals();
+
         v.material = material3;
+        v.material.shading = THREE.SmoothShading;
       });
 
 
@@ -224,8 +226,8 @@ export class App extends Basic3 {
   }
 
   move({ x, y }) {
-    this.target.y = 0.0 + y * 6;
-    this.target.z = 0.0 + x * 6;
+    // this.target.y = 0.0 + y * 6;
+    // this.target.z = 0.0 + x * 6;
   }
   
   resize(w, h) {
