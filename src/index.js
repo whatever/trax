@@ -37,6 +37,7 @@ export class App extends Basic3 {
     this.el = el;
     [this.ctx, this.renderer] = basic3(el)
     this.renderer.setClearColor(0x000000);
+    this.renderer.physicallyCorrectLights = true
 
     this.resize(window.innerWidth, window.innerHeight);
 
@@ -57,12 +58,12 @@ export class App extends Basic3 {
 
     this.center = new THREE.Vector3(0, 10, 0);
     this.target = new THREE.Vector3(20, 4, 0);
-    this.target = new THREE.Vector3(20, 10, 0);
+    this.target = new THREE.Vector3(30, 10, 0);
 
     this.generateNeon();
 
     // XXX: Re-ablet to display logo
-    // this.generateLogo();
+    this.generateLogo();
 
     // XXX: Re-ablet to display floor
     // this.generateAlley();
@@ -149,37 +150,33 @@ export class App extends Basic3 {
 
     let scene = this.scene;
     let loader = new THREE.FontLoader();
-    loader.load("helvetiker.json", function (font) {
-      let geo = new THREE.TextGeometry("TRAX", {
-        font: font,
-        size: 1,
-        height: 1,
+    let objLoader = new THREE.OBJLoader();
+
+    let mat = new THREE.MeshBasicMaterial({
+      color: 0xFFFFFF,
+      // envMap: logoRenderTarget.texture,
+
+      // combine: THREE.MultiplyOperation,
+      reflectivity: 1.0,
+    });
+
+    let normalMat = new THREE.MeshNormalMaterial();
+
+    let basic = new THREE.MeshBasicMaterial({color: 0xFF0000});
+
+    const gltfLoader = new GLTFLoader();
+
+    gltfLoader.load("static/trax.gltf", function (gltf) {
+      gltf.scene.position.set(this.target.x, this.target.y, this.target.z);
+      gltf.scene.rotation.y = -Math.PI/2;
+
+      gltf.scene.children[0].children.forEach((v) => {
+        v.material = mat;
       });
-      let mat = new THREE.MeshBasicMaterial({
-        envMap: logoRenderTarget.texture,
-        combine: THREE.MultiplyOperation,
-        reflectivity: 1.0,
-      });
-      let mesh = new THREE.Mesh(geo, mat);
-      logoCubeCamera.position.set(this.target.x, this.target.y, this.target.z);
-      mesh.lookAt(-0.2, 10, 0.3);
-      this.logo = mesh;
-
-      this.logo = new THREE.Mesh(
-        new THREE.SphereGeometry(2, 200, 200),
-        mat,
-      );
-
-      this.logo.position.set(this.target.x, this.target.y, this.target.z);
 
 
-      let g = new THREE.TorusGeometry(5.5, 0.2, 10, 100);
-      let m = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
-      this.ring = new THREE.Mesh(g, m);
-      this.ring.position.set(this.target.x, this.target.y, this.target.z);
-
-      scene.add(this.logo);
-      scene.add(this.ring);
+      this.thing = gltf.scene;
+      scene.add(gltf.scene);
     }.bind(this));
   }
 
@@ -210,13 +207,6 @@ export class App extends Basic3 {
     let w = 1;
     let h = 5.0 + Math.random() * 7;
     let geo = new THREE.BoxGeometry(w, h, w);
-
-    /*
-    geo.faceVertexUvs[0][2][0].set( 0, 0 );
-    geo.faceVertexUvs[0][2][1].set(0, 0);
-    geo.faceVertexUvs[0][2][2].set(0, 0);
-    geo.faceVertexUvs[0][2][3].set(0, 0);
-    */
 
     let mat = new THREE.MeshLambertMaterial({
       "map": tex,
@@ -255,7 +245,9 @@ export class App extends Basic3 {
     this.camera.position.z = this.center.z;
     this.camera.lookAt(this.target);
 
-    // this.neons[0].rotation.x = t;
+    if (this.thing) {
+      this.thing.rotation.y = 5*t;
+    }
 
     if (this.glove) {
       this.glove.update();

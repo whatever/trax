@@ -60,7 +60,7 @@
       z-index: 69;
       position: fixed;
       top: 10px;
-      left: 10px;
+      right: 10px;
       font-size: 40px;
       color: rgb(152, 247, 109);
 
@@ -128,10 +128,10 @@
 
     <canvas width="1500" height="1500" id="trax"></canvas>
 
-    <!-- PIP -->
+    <!-- PIP
     <video defaultMuted loop muted autoplay playsinline id="wavvy">
       <source src="videos/wavvy.mp4">
-    </video>
+    </video> -->
 
     <script>
 
@@ -140,8 +140,10 @@
 
     window.addEventListener("load", function (ev) {
 
+      var DELAY = 1000;
+
       var loaded = new Date() - start;
-      var delay = Math.ceil(6000-loaded, 0);
+      var delay = Math.ceil(DELAY-loaded, 0);
 
       console.log("Delaying ", delay);
 
