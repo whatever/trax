@@ -42,9 +42,9 @@ export class App extends Basic3 {
 
     this.scene = new THREE.Scene();
 
-    this.scene.add(new THREE.AmbientLight(0xDDDDDD, 1.0));
+    this.scene.add(new THREE.AmbientLight(0x999999, 1.0));
 
-    let dirLight = new THREE.DirectionalLight(0xB72AC7, 0.8);
+    let dirLight = new THREE.DirectionalLight(0x111111, 0.8);
     dirLight.position.set(0, 10, 0);
     dirLight.target.position.set(1, 0, 5);
     this.scene.add(dirLight);
@@ -158,6 +158,14 @@ export class App extends Basic3 {
       // reflectivity: 1.0,
     });
 
+    const material3 = new THREE.MeshPhongMaterial({
+      shininess: 100,
+      color: 0xFFFFFF,
+      specular: 0xff4470,
+      reflectivity: 1.0,
+      envMap: logoRenderTarget.texture,
+    });
+
     // let normalMat = new THREE.MeshNormalMaterial();
 
     // let basic = new THREE.MeshBasicMaterial({color: 0xFF0000});
@@ -171,7 +179,7 @@ export class App extends Basic3 {
       gltf.scene.children[0].children.forEach((v) => {
         v.geometry.computeVertexNormals();
         v.geometry.computeFaceNormals();
-        v.material = mat;
+        v.material = material3;
       });
 
 
@@ -216,8 +224,8 @@ export class App extends Basic3 {
   }
 
   move({ x, y }) {
-    // this.target.y = 0.0 + y * 6;
-    // this.target.z = 0.0 + x * 6;
+    this.target.y = 0.0 + y * 6;
+    this.target.z = 0.0 + x * 6;
   }
   
   resize(w, h) {
