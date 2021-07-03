@@ -33,6 +33,13 @@ a, a:visited {
   text-align: center;
   position: absolute;
   bottom: 1em;
+  font-size: 40px;
+}
+
+@media (max-height: 380px) {
+  #nav #wrapper {
+    font-size: 25px;
+  }
 }
 
 /* PHONE PORTRAIT */
