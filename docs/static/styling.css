@@ -14,15 +14,6 @@ html, body {
   height: -webkit-fill-available;
 }
 
-body {
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-}
-
-html {
-  height: -webkit-fill-available;
-}
-
 a, a:visited {
   text-decoration: none;
   color: white;
@@ -37,13 +28,17 @@ a:hover {
 #art, #trax {
   background-color: red;
   height: 50%;
+  height: 50vh;
   width: 100%;
+  width: 100vw;
 }
 
 #nav {
   background-color: black;
   height: 50%;
+  height: 50vh;
   width: 100%;
+  width: 100vw;
   vertical-align: bottom;
   position: relative;
 }
@@ -72,7 +67,9 @@ a:hover {
 @media (min-aspect-ratio: 2/1) {
   #art, #trax, #nav {
     width: 50%;
+    width: 50vw;
     height: 100%;
+    height: 100vh;
     float: left;
     display: inline-block;
   }
