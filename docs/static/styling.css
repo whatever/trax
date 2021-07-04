@@ -69,8 +69,8 @@ a:hover {
     width: 50%;
     width: 50vw;
     height: 100%;
-    height: 100vh;
-    height: -webkit-fill-available;
+    max-height: 100vh;
+    max-height: -webkit-fill-available;
     float: left;
     display: inline-block;
   }
