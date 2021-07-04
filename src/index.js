@@ -77,16 +77,6 @@ export class App extends Basic3 {
     console.log("(>o_o)> damn...");
   }
 
-  generateSomething() {
-    const loader = new GLTFLoader();
-    let scene = this.scene;
-    loader.load("./half-baked.gltf", (gltf) => {
-      gltf.scene.position.set(30, 5, 0);
-      scene.add(gltf.scene);
-      console.log("Loaded");
-    });
-  }
-
   generateNeon() {
 
     this.neons = [];
@@ -95,7 +85,7 @@ export class App extends Basic3 {
 
       let x = 1*i-20;
       let y = 12;
-      let z = +10;
+      let z = +20;
 
       let lhs = RandomNeonLight();
       lhs.rotation.x = Math.PI/2;
@@ -175,6 +165,8 @@ export class App extends Basic3 {
     gltfLoader.load("static/trax.gltf", function (gltf) {
       gltf.scene.position.set(this.target.x, this.target.y, this.target.z);
       gltf.scene.rotation.y = -Math.PI/2;
+      const s = 3.0;
+      gltf.scene.scale.set(s, s, s);
 
       gltf.scene.children[0].children.forEach((v) => {
         v.geometry.computeVertexNormals();
@@ -188,41 +180,6 @@ export class App extends Basic3 {
       this.thing = gltf.scene;
       scene.add(gltf.scene);
     }.bind(this));
-  }
-
-  generateCity() {
-
-    let tex = generateTexture(this.renderer);
-
-    let floorMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(10.0, 10.0),
-      new THREE.MeshBasicMaterial({color: RandomColor()}),
-    );
-
-    this.scene.add(floorMesh);
-
-    for (let i = 0; i <= 20; i++) {
-      for (let j = -10; j <= 10; j++) {
-        let x = 2 * i;
-        let z = 2 * j;
-        let mesh = this.generateBuilding(tex);
-        mesh.position.set(x, 0, z);
-        this.scene.add(mesh);
-      }
-    }
-  }
-
-  generateBuilding(tex) {
-
-    let w = 1;
-    let h = 5.0 + Math.random() * 7;
-    let geo = new THREE.BoxGeometry(w, h, w);
-
-    let mat = new THREE.MeshLambertMaterial({
-      "map": tex,
-    });
-
-    return new THREE.Mesh(geo, mat);
   }
 
   move({ x, y }) {
@@ -244,7 +201,7 @@ export class App extends Basic3 {
 
   resizeFunction(container) {
     return function() {
-      this.resize(window.innerWidth, window.innerHeight);
+      this.resize(window.innerWidth, window.innerHeight/2.0);
     }.bind(this);
   }
 
