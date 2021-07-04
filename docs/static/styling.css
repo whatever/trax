@@ -5,7 +5,6 @@ html, body {
 
   height: 100%;
   height: 100vh;
-  height: -webkit-fill-available;
   width: 100%;
   width: 100vw;
 
@@ -16,6 +15,9 @@ html, body {
   background-color: black;
 }
 
+body {
+  max-height: -webkit-fill-available;
+}
 #container {
   height: 100%;
   width: 100%;
@@ -69,7 +71,7 @@ a:hover {
 /* LANDSCAPE */
 @media (min-aspect-ratio: 2/1) {
   #trax {
-    border-right: solid 1px blue;
+    border-right: solid 1px pink;
   }
   #art, #trax, #nav {
     width: 50%;
