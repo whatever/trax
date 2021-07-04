@@ -13,9 +13,15 @@ html, body {
 a, a:visited {
   text-decoration: none;
   color: white;
+  color: #DDDDDD;
 }
 
-#art {
+a:hover {
+  color: rgb(255, 68, 112);
+  color: white;;
+}
+
+#art, #trax {
   background-color: red;
   height: 50%;
   width: 100%;
@@ -45,13 +51,13 @@ a, a:visited {
 
 /* PHONE PORTRAIT */
 @media (max-aspect-ratio: 1/1){
-  #art, #nav {
+  #trax, #art, #nav {
   }
 }
 
 /* LANDSCAPE */
 @media (min-aspect-ratio: 2/1) {
-  #art, #nav {
+  #art, #trax, #nav {
     width: 50%;
     height: 100%;
     float: left;

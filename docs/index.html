@@ -12,6 +12,9 @@
     <meta property="og:video:height" content="300" />
 
     <link href="normalize.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="static/styling.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
     <style>
 
     html, body {
@@ -43,13 +46,6 @@
       z-index: -1;
     }
 
-    #trax {
-      position: fixed;
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 100%;
-    }
 
     #menu-click a {
       color: rgb(152, 247, 109);
@@ -122,11 +118,23 @@
   <body>
 
     <!-- ok -->
-    <header id="menu-click"><div><a href="menu.pdf">MENU</a></div></header>
+    <!-- <header id="menu-click"><div><a href="menu.pdf">MENU</a></div></header> -->
 
     <div id="side-panel"></div>
 
     <canvas width="1500" height="1500" id="trax"></canvas>
+    <div id="nav">
+      <div id="wrapper">
+        <a href="/menu.pdf">menu</a><br><br>
+        <a href="/contact">contact</a><br><br>
+        <a href="/vibes">vibes</a><br><br>
+        <a href="https://github.com/whatever/trax" class="fab fa-github"></a>
+        &nbsp;
+        <a href="twitch" class="fab fa-twitch"></a>
+        &nbsp;
+        <a href="insta" class="fab fa-instagram"></a>
+      </div>
+    </div>
 
     <!-- PIP
     <video defaultMuted loop muted autoplay playsinline id="wavvy">
@@ -144,8 +152,6 @@
 
       var loaded = new Date() - start;
       var delay = Math.ceil(DELAY-loaded, 0);
-
-      console.log("Delaying ", delay);
 
       setTimeout(function () {
 
