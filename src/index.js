@@ -204,6 +204,10 @@ export class App extends Basic3 {
       let h = Math.floor(el.offsetHeight)-1 ;
 
       if (h < 0) {
+        h = window.innerHeight / 2;
+      }
+
+      if (window.innerWidth/window.innerHeight > 2.0) {
         h = window.innerHeight;
       }
 

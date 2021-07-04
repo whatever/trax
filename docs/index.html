@@ -96,10 +96,13 @@
 
     <script>
 
-      svv.LoadingSequence();
-    var start = +new Date();
+      window.scrollTo(0, 1);
+      window.scrollTo(0, 0);
 
-    window.addEventListener("load", function (ev) {
+      svv.LoadingSequence();
+      var start = +new Date();
+
+      window.addEventListener("load", function (ev) {
 
       var DELAY = 60;
 
