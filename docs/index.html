@@ -124,8 +124,10 @@
           resizer();
 
           var nav = document.getElementById("nav");
+          // nav.style.height = window.innerHeight + "px";
           var sizing = document.getElementById("sizing");
           sizing.innerHTML = nav.offsetHeight + "/" + window.innerHeight;
+
         };
         window.onresize();
 
