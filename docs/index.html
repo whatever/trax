@@ -17,6 +17,13 @@
 
     <style>
 
+    #sizing {
+      position: fixed;
+      top: 0.5em;
+      right: 0.5em;
+      font-size: 10pt;
+    }
+
     #you-know {
       top: 0;
       left: 0;
@@ -78,6 +85,8 @@
       </div>
     </div>
 
+    <div id="sizing"></div>
+
     <!-- PIP
     <video defaultMuted loop muted autoplay playsinline id="wavvy">
       <source src="videos/wavvy.mp4">
@@ -106,8 +115,12 @@
         var resizer = app.resizeFunction(el);
 
         window.onresize = function () {
-          document.body.height = window.innerHeight;
+          // document.body.height = window.innerHeight;
           resizer();
+
+          var nav = document.getElementById("nav");
+          var sizing = document.getElementById("sizing");
+          sizing.innerHTML = nav.offsetHeight + "/" + window.innerHeight;
         };
         window.onresize();
 

@@ -38,8 +38,6 @@ export class App extends Basic3 {
     [this.ctx, this.renderer] = basic3(el)
     this.renderer.setClearColor(0x000000);
 
-    this.resize(window.innerWidth, window.innerHeight);
-
     this.scene = new THREE.Scene();
 
     this.scene.add(new THREE.AmbientLight(0x999999, 1.0));
@@ -202,7 +200,7 @@ export class App extends Basic3 {
   resizeFunction(container) {
     return function() {
       const el = document.getElementById("nav");
-      this.resize(Math.floor(el.offsetWidth-2), Math.floor(el.offsetHeight-1));
+      this.resize(Math.floor(el.offsetWidth-10), Math.floor(el.offsetHeight-1));
       // this.resize(window.innerWidth, window.innerHeight/2.0);
     }.bind(this);
   }
