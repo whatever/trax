@@ -200,7 +200,14 @@ export class App extends Basic3 {
   resizeFunction(container) {
     return function() {
       const el = document.getElementById("nav");
-      this.resize(Math.floor(el.offsetWidth-10), Math.floor(el.offsetHeight-1));
+
+      let h = Math.floor(el.offsetHeight)-1 ;
+
+      if (h < 0) {
+        h = 380;
+      }
+
+      this.resize(Math.floor(el.offsetWidth-10), h);
       // this.resize(window.innerWidth, window.innerHeight/2.0);
     }.bind(this);
   }
