@@ -8,6 +8,10 @@ html, body {
   width: 100vw;
   font-size: 40px;
   font-family: sans-serif;
+
+  background-color: rgb(255, 68, 112);
+  background-color: black;
+  height: -webkit-fill-available;
 }
 
 a, a:visited {

@@ -17,19 +17,6 @@
 
     <style>
 
-    html, body {
-      font-family: sans-serif;
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-      background-color: rgb(255, 68, 112);
-      background-color: black;
-    }
-
-    a {
-      text-decoration: none;
-    }
-
     #you-know {
       top: 0;
       left: 0;
@@ -38,47 +25,6 @@
       height: 100%;
     }
 
-    #dont-touch-me {
-      position: absolute;
-      display: block;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-
-    #menu-click a {
-      color: rgb(152, 247, 109);
-      /* color: black; */
-    }
-
-    #menu-click {
-      z-index: 69;
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      font-size: 40px;
-      color: rgb(152, 247, 109);
-
-      border: solid 10px rgb(152, 247, 109);
-      /* border: solid 10px black; */
-
-      padding: 0.5em;
-      border-radius: 30px 10px 30px 10px;
-      font-style: italic;
-
-    }
-
-    #side-panel {
-      z-index: 1;
-      width: 20%;
-      height: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background-color: rgba(255, 255, 255, 0.4);
-      display: none;
-    }
 
     #wavvy {
       max-height: 400px;
@@ -100,6 +46,7 @@
       width: 100%;
       height: 100%;
     }
+
     video {
       object-fit: cover;
     }
@@ -116,11 +63,6 @@
 
   </head>
   <body>
-
-    <!-- ok -->
-    <!-- <header id="menu-click"><div><a href="menu.pdf">MENU</a></div></header> -->
-
-    <div id="side-panel"></div>
 
     <canvas width="1500" height="1500" id="trax"></canvas>
     <div id="nav">
