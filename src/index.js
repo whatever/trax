@@ -201,7 +201,9 @@ export class App extends Basic3 {
 
   resizeFunction(container) {
     return function() {
-      this.resize(window.innerWidth, window.innerHeight/2.0);
+      const el = document.getElementById("nav");
+      this.resize(Math.floor(el.offsetWidth-1), Math.floor(el.offsetHeight-1));
+      // this.resize(window.innerWidth, window.innerHeight/2.0);
     }.bind(this);
   }
 
