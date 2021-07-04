@@ -204,7 +204,7 @@ export class App extends Basic3 {
       let h = Math.floor(el.offsetHeight)-1 ;
 
       if (h < 0) {
-        h = 380;
+        h = window.innerHeight;
       }
 
       this.resize(Math.floor(el.offsetWidth-10), h);

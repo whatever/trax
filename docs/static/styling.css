@@ -74,7 +74,7 @@ a:hover {
 /* LANDSCAPE */
 @media (min-aspect-ratio: 2/1) {
   #trax {
-    border-right: solid 1px red;
+    border-right: solid 1px blue;
   }
   #art, #trax, #nav {
     width: 50%;
