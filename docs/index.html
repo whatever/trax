@@ -90,9 +90,10 @@
       <div id="nav">
         <table id="wrapper">
           <tr><td><a href="/menu.pdf">menu</a></td></tr>
+          <tr><td><a href="/order">order</a></td></tr>
           <tr><td><a href="/merch">merch</a></td></tr>
-          <tr><td><a href="/">info</a></td></tr>
-          <tr><td><a href="/">contact</a></td></tr>
+          <tr><td><a href="/info">info</a></td></tr>
+          <tr><td><a href="/contact">contact</a></td></tr>
           <tr><td><a href="https://youtu.be/fIlJyZEbrzo">paradise</a></td></tr>
           <tr><td><a href="javascript:vvvvibes();"><i class="fas fa-volume-mute" id="vvvvicon"></i> VIBES</a></td></tr>
           <tr><td>
@@ -103,30 +104,11 @@
             <a href="insta" class="fab fa-instagram"></a>
           </td></tr>
         </table>
-
-            <!--
-        <div id="wrapper">
-          <a href="/contact">merch</a><br><br>
-          <a href="/info">info</a><br><br>
-          <a href="/contact">contact</a><br><br>
-          <a href="https://youtu.be/fIlJyZEbrzo">paradise</a><br><br>
-          <a href="javascript:vvvvibes();"><i class="fas fa-volume-mute" id="vvvvicon"></i> VIBES</a><br><br>
-          <a href="https://github.com/whatever/trax" class="fab fa-github"></a>
-          &nbsp;
-          <a href="twitch" class="fab fa-twitch"></a>
-          &nbsp;
-          <a href="insta" class="fab fa-instagram"></a>
-        </div>
-            -->
       </div>
     </div>
 
     <div id="sizing"></div>
 
-    <!-- PIP
-    <video defaultMuted loop muted autoplay playsinline id="wavvy">
-      <source src="videos/wavvy.mp4">
-    </video> -->
     <audio preload="none" id="vvvvibes">
       <source src="/static/audio.m4a" type="audio/mp4" />
     </audio>
@@ -142,7 +124,6 @@
       window.addEventListener("load", function (ev) {
 
       var DELAY = 6000;
-
       var loaded = new Date() - start;
       var delay = Math.ceil(DELAY-loaded, 0);
 
