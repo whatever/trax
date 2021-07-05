@@ -244,7 +244,7 @@ export class App extends Basic3 {
         h = window.innerHeight;
       }
 
-      this.resize(Math.floor(el.offsetWidth-10), h);
+      this.resize(Math.floor(el.offsetWidth-1), h);
       // this.resize(window.innerWidth, window.innerHeight/2.0);
     }.bind(this);
   }
