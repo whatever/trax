@@ -180,10 +180,10 @@ export class App extends Basic3 {
     });
 
     const material3 = new THREE.MeshPhongMaterial({
-      shininess: 1,
+      shininess: 40,
       color: 0xFFFFFF,
       specular: 0xFF4470,
-      reflectivity: 0.75,
+      reflectivity: 0.85,
       envMap: logoRenderTarget.texture,
       // combine: THREE.AddOperation,
     });
