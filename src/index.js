@@ -92,7 +92,7 @@ export class App extends Basic3 {
     };
 
     let sky = new Sky();
-    const s = 300;
+    const s = 150;
     sky.scale.set(s, s, s);
     sky.position.set(this.target.x, this.target.y, this.target.z);
 
@@ -159,7 +159,7 @@ export class App extends Basic3 {
 
   generateLogo() {
 
-    let logoRenderTarget = new THREE.WebGLCubeRenderTarget(1024, {
+    let logoRenderTarget = new THREE.WebGLCubeRenderTarget(256, {
       format: THREE.RGBFormat,
       generateMipmaps: true,
       minFilter: THREE.LinearMipmapLinearFilter,
@@ -182,8 +182,9 @@ export class App extends Basic3 {
     const material3 = new THREE.MeshPhongMaterial({
       shininess: 40,
       color: 0xFFFFFF,
+      emissive: 0xFFFFFF,
       specular: 0xFF4470,
-      reflectivity: 0.85,
+      reflectivity: 0.90,
       envMap: logoRenderTarget.texture,
       // combine: THREE.AddOperation,
     });
