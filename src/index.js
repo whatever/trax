@@ -50,9 +50,13 @@ export class App extends Basic3 {
     this.scene.add(dirLight.target);
     this.scene.fog = new THREE.Fog(0x000000, 1, 80);
 
-    let pointLight = new THREE.PointLight(0xFFFFFF, 0.8);
+    let pointLight = new THREE.PointLight(0xFFFFFF, 1.2);
     pointLight.position.set(10, 10, 0);
     this.scene.add(pointLight);
+
+    let sideLight = new THREE.PointLight(0x34bdeb, 0.3);
+    pointLight.position.set(5, 0, -5);
+    this.scene.add(sideLight);
 
     this.center = new THREE.Vector3(0, 10, 0);
     this.target = new THREE.Vector3(20, 4, 0);
@@ -170,21 +174,13 @@ export class App extends Basic3 {
 
     let scene = this.scene;
     let loader = new THREE.FontLoader();
-    let objLoader = new THREE.OBJLoader();
-
-    let mat = new THREE.MeshLambertMaterial({
-      color: 0xFFFF00,
-      envMap: logoRenderTarget.texture,
-      // combine: THREE.MultiplyOperation,
-      // reflectivity: 1.0,
-    });
 
     const material3 = new THREE.MeshPhongMaterial({
-      shininess: 40,
+      shininess: 60,
       color: 0xFFFFFF,
       emissive: 0xFFFFFF,
       specular: 0xFF4470,
-      reflectivity: 0.90,
+      reflectivity: 0.88,
       envMap: logoRenderTarget.texture,
       // combine: THREE.AddOperation,
     });
