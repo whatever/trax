@@ -48,7 +48,7 @@ export class App extends Basic3 {
     dirLight.target.position.set(1, 0, 5);
     this.scene.add(dirLight);
     this.scene.add(dirLight.target);
-    this.scene.fog = new THREE.Fog(0x003366, 10, 60);
+    this.scene.fog = new THREE.Fog(0x000000, 1, 80);
 
     let pointLight = new THREE.PointLight(0xFFFFFF, 0.8);
     pointLight.position.set(10, 10, 0);
@@ -69,6 +69,8 @@ export class App extends Basic3 {
 
     console.log("(>o_o)> damn...");
     this.generateSky();
+
+    this.generateGround();
   }
 
   generateSky() {
@@ -139,14 +141,20 @@ export class App extends Basic3 {
   }
 
   Plane(orientation) {
-    let g = new THREE.PlaneGeometry(400.0, 20.0, 10.0, 10.0);
-    let m = new THREE.MeshBasicMaterial({color: 0x333333, side: THREE.DoubleSide});
+    let g = new THREE.PlaneGeometry(400.0, 400.0, 10.0, 10.0);
+    let m = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
     let mesh = new THREE.Mesh(g, m);
     mesh.rotation.x = Math.PI/2;
     return mesh;
   }
 
   generateGround() {
+    let geo = new THREE.PlaneGeometry(1, 1);
+    let mat = new THREE.MeshBasicMaterial({color: 0x00000, side: THREE.DoubleSide0});
+    let obj = new THREE.Mesh(geo, mat);
+    obj.rotation.x = Math.PI/2;
+    obj.scale.set(4000, 4000);
+    this.scene.add(this.Plane());
   }
 
   generateLogo() {
@@ -175,7 +183,7 @@ export class App extends Basic3 {
       shininess: 1,
       color: 0xFFFFFF,
       specular: 0xFF4470,
-      reflectivity: 0.90,
+      reflectivity: 0.70,
       envMap: logoRenderTarget.texture,
     });
 
