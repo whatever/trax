@@ -1,8 +1,9 @@
-import {Basic3, basic3} from "../basics.js";
+import {Basic3, basic3} from "./basics.js";
 import {GLTFLoader} from "./GLTFLoader.js";
 import {Glove} from "./glove.js";
 
 import {LoadingSequence} from "./loading.js";
+import {Sky} from "./Sky.js";
 
 export {LoadingSequence};
 
@@ -62,17 +63,50 @@ export class App extends Basic3 {
     // XXX: Re-ablet to display logo
     this.generateLogo();
 
-    // XXX: Re-ablet to display floor
-    // this.generateAlley();
-
-    // XXX: Re-enable to display baked lights
-    // this.generateSomething();
-
     this.glove = new Glove(this.center);
 
     this.scene.add(this.glove.mesh);
 
     console.log("(>o_o)> damn...");
+    this.generateSky();
+  }
+
+  generateSky() {
+
+    let sun = new THREE.Vector3();
+
+    const effectController = {
+      turbidity: 13.8,
+      rayleigh: 3.416,
+      mieCoefficient: 0.019,
+      mieDirectionalG: 0.7,
+      elevation: 0,
+      azimuth: 135,
+      exposure: this.renderer.toneMappingExposure
+    };
+
+    let sky = new Sky();
+    const s = 300;
+    sky.scale.set(s, s, s);
+    sky.position.set(this.target.x, this.target.y, this.target.z);
+
+    console.log(this.sky);
+    const uniforms = sky.material.uniforms;
+    uniforms[ 'turbidity' ].value = effectController.turbidity;
+    uniforms[ 'rayleigh' ].value = effectController.rayleigh;
+    uniforms[ 'mieCoefficient' ].value = effectController.mieCoefficient;
+    uniforms[ 'mieDirectionalG' ].value = effectController.mieDirectionalG;
+
+    const phi = THREE.MathUtils.degToRad( 90 - effectController.elevation );
+    const theta = THREE.MathUtils.degToRad( effectController.azimuth );
+
+    sun.setFromSphericalCoords( 1, phi, theta );
+
+    uniforms[ 'sunPosition' ].value.copy( sun );
+
+    this.renderer.toneMappingExposure = effectController.exposure;
+
+    this.scene.add(sky);
   }
 
   generateNeon() {
@@ -112,14 +146,6 @@ export class App extends Basic3 {
     return mesh;
   }
 
-  generateAlley() {
-    this.alley = this.Plane({x: Math.PI/2});
-    this.alley.position.set(this.target.x, this.target.y-10.0, this.target.z);
-    this.scene.add(this.alley);
-
-    console.log("Alley generated.");
-  }
-
   generateGround() {
   }
 
@@ -129,7 +155,6 @@ export class App extends Basic3 {
       format: THREE.RGBFormat,
       generateMipmaps: true,
       minFilter: THREE.LinearMipmapLinearFilter,
-      //encoding: THREE.sRGBEncoding,
     });
 
     let logoCubeCamera = new THREE.CubeCamera(0.5, 1000, logoRenderTarget);
@@ -150,7 +175,7 @@ export class App extends Basic3 {
       shininess: 1,
       color: 0xFFFFFF,
       specular: 0xFF4470,
-      reflectivity: 0.76,
+      reflectivity: 0.90,
       envMap: logoRenderTarget.texture,
     });
 
@@ -249,45 +274,4 @@ export class App extends Basic3 {
     }
     this.renderer.render(this.scene, this.camera);
   }
-}
-
-
-function generateTexture(renderer) {
-  // build a small canvas 32x64 and paint it in white
-  var canvas = document.createElement('canvas');
-  canvas.width = 32;
-  canvas.height = 64;
-  var context = canvas.getContext('2d');
-  // plain it in white
-  context.fillStyle = '#ffffff';
-  context.fillRect(0, 0, 32, 64);
-  // draw the window rows - with a small noise to simulate light variations in each room
-  for (var y = 2; y < 64; y += 2) {
-    for (var x = 0; x < 32; x += 2) {
-      var value = Math.floor(Math.random() * 64);
-      context.fillStyle = 'rgb(' + [value, value, value].join(',') + ')';
-      context.fillRect(x, y, 2, 1);
-    }
-  }
-
-  // build a bigger canvas and copy the small one in it
-  // This is a trick to upscale the texture without filtering
-  var canvas2 = document.createElement('canvas');
-  canvas2.width = 512;
-  canvas2.height = 1024;
-  var context = canvas2.getContext('2d');
-  // disable smoothing
-  context.imageSmoothingEnabled = false;
-  context.webkitImageSmoothingEnabled = false;
-  context.imageSmoothingEnabled = false;
-  // then draw the image
-  context.drawImage(canvas, 0, 0, canvas2.width, canvas2.height);
-  // return the just built canvas2
-
-
-  var texture = new THREE.Texture(canvas2);
-  texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-  texture.needsUpdate = true;
-
-  return texture;
 }
