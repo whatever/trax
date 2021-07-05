@@ -38,6 +38,7 @@ a:hover {
   background-color: red;
   height: 50%;
   width: 100%;
+  touch-action: none;
 }
 
 #nav {

@@ -249,6 +249,35 @@ export class App extends Basic3 {
     }.bind(this);
   }
 
+  pointerDown(ev) {
+    this.dragging = true;
+    this.mousePos = [ev.clientX, ev.clientY];
+  }
+
+  pointerUp(ev) {
+    this.dragging = false;
+    console.log("UP");
+  }
+
+  pointerMove(ev) {
+
+    if (this.dragging) {
+      let x = ev.clientX;
+      let y = ev.clientY;
+
+      let dx = (x-this.mousePos[0]) / 888.;
+      let dy = (y-this.mousePos[1]) / 888.;
+
+      this.x = x;
+      this.y = y;
+
+      this.thing.rotation.x += dy;
+      this.thing.rotation.y += dx;
+      
+      // console.log(dx, dy);
+    }
+  }
+
   update() {
     let t = +new Date() / 1000 / 5;
     this.camera.position.x = this.center.x;
@@ -257,7 +286,7 @@ export class App extends Basic3 {
     this.camera.lookAt(this.target);
 
     if (this.thing) {
-      this.thing.rotation.y = 5*t;
+      // this.thing.rotation.y = 5*t;
     }
 
     if (this.glove) {
