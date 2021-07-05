@@ -71,6 +71,10 @@ export class App extends Basic3 {
     this.generateSky();
 
     this.generateGround();
+
+    this.dx = 0.01;
+    this.dy = 0.00;
+    this.floating = true;
   }
 
   generateSky() {
@@ -141,19 +145,15 @@ export class App extends Basic3 {
   }
 
   Plane(orientation) {
-    let g = new THREE.PlaneGeometry(400.0, 400.0, 10.0, 10.0);
+    let g = new THREE.PlaneGeometry(1000.0, 1000.0, 10.0, 10.0);
     let m = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
     let mesh = new THREE.Mesh(g, m);
     mesh.rotation.x = Math.PI/2;
+    mesh.position.y = -10;
     return mesh;
   }
 
   generateGround() {
-    let geo = new THREE.PlaneGeometry(1, 1);
-    let mat = new THREE.MeshBasicMaterial({color: 0x00000, side: THREE.DoubleSide0});
-    let obj = new THREE.Mesh(geo, mat);
-    obj.rotation.x = Math.PI/2;
-    obj.scale.set(4000, 4000);
     this.scene.add(this.Plane());
   }
 
@@ -183,13 +183,10 @@ export class App extends Basic3 {
       shininess: 1,
       color: 0xFFFFFF,
       specular: 0xFF4470,
-      reflectivity: 0.70,
+      reflectivity: 0.75,
       envMap: logoRenderTarget.texture,
+      // combine: THREE.AddOperation,
     });
-
-    // let normalMat = new THREE.MeshNormalMaterial();
-
-    // let basic = new THREE.MeshBasicMaterial({color: 0xFF0000});
 
     const gltfLoader = new GLTFLoader();
 
@@ -250,11 +247,15 @@ export class App extends Basic3 {
   }
 
   pointerDown(ev) {
+    this.dx = this.dy = 0.0;
     this.dragging = true;
+    this.floating = false;
     this.mousePos = [ev.clientX, ev.clientY];
+    ev.srcElement.style.cursor = "grabbing";
   }
 
   pointerUp(ev) {
+    ev.srcElement.style.cursor = "grab";
     this.dragging = false;
     console.log("UP");
   }
@@ -265,16 +266,8 @@ export class App extends Basic3 {
       let x = ev.clientX;
       let y = ev.clientY;
 
-      let dx = (x-this.mousePos[0]) / 888.;
-      let dy = (y-this.mousePos[1]) / 888.;
-
-      this.x = x;
-      this.y = y;
-
-      this.thing.rotation.x += dy;
-      this.thing.rotation.y += dx;
-      
-      // console.log(dx, dy);
+      this.dx = (x-this.mousePos[0]) / 888.;
+      this.dy = (y-this.mousePos[1]) / 888.;
     }
   }
 
@@ -286,7 +279,13 @@ export class App extends Basic3 {
     this.camera.lookAt(this.target);
 
     if (this.thing) {
-      // this.thing.rotation.y = 5*t;
+      this.thing.rotation.x += this.dy;
+      this.thing.rotation.y += this.dx;
+
+      if (!this.floating) {
+        this.dy *= 0.95;
+        this.dx *= 0.95;
+      }
     }
 
     if (this.glove) {
