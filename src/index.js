@@ -70,7 +70,8 @@ export class App extends Basic3 {
     this.target = new THREE.Vector3(20, 4, 0);
     this.target = new THREE.Vector3(30, 10, 0);
 
-    this.meshes = [];
+    this.meshes = {};
+    this.neons = [];
 
     // this.generateNeon();
 
@@ -140,24 +141,16 @@ export class App extends Basic3 {
       let z = +10;
 
       let lhs_key = RandomElement(this.meshes);
-      let lhs = this.meshes[lhs_key];
-      lhs.position.set(x, RandomNumber(12, 13), z);
-      // console.log(lhs.position);
-      // let lhs = RandomNeonLight();
-      // lhs.rotation.x = Math.PI/2;
-      // lhs.rotation.y = Math.PI/2;
-      // lhs.rotation.z = 0;
-
+      let lhs = this.meshes[lhs_key].clone();
       lhs.position.set(x, RandomNumber(7, 12), z);
 
       let rhs_key = RandomElement(this.meshes);
-      let rhs = this.meshes[rhs_key];
-      rhs.position.set(x, RandomNumber(9, 15), -z);
+      let rhs = this.meshes[rhs_key].clone();
+      rhs.position.set(x, RandomNumber(9, 12), -z);
 
-      // console.log(lhs);
-      this.scene.add(lhs.clone());
-      this.scene.add(rhs.clone());
-
+      this.scene.add(lhs);
+      this.scene.add(rhs);
+      this.neons.push(lhs, rhs);
     }
   }
 
@@ -305,6 +298,10 @@ export class App extends Basic3 {
     this.camera.position.y = this.center.y;
     this.camera.position.z = this.center.z;
     this.camera.lookAt(this.target);
+
+    this.neons.forEach((mesh)=> {
+      mesh.position.x -= 0.1;
+    });
 
     if (this.thing) {
       this.thing.rotation.x += this.dy;
