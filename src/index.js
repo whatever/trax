@@ -11,11 +11,19 @@ const COLORS = [
   0x1F51FF,
   0xFE019A,
   0xCFFF04,
+  0xFFFF00,
+  0x00FF66,
+  0x6E0DD0,
 ];
 
 function RandomNumber(low, high) {
   let r = Math.random();
   return low + (high - low)*r;
+}
+
+function RandomElement(o) {
+  let keys = Object.keys(o);
+  return keys[Math.floor(Math.random()*keys.length)];
 }
 
 function RandomColor() {
@@ -62,7 +70,9 @@ export class App extends Basic3 {
     this.target = new THREE.Vector3(20, 4, 0);
     this.target = new THREE.Vector3(30, 10, 0);
 
-    this.generateNeon();
+    this.meshes = [];
+
+    // this.generateNeon();
 
     // XXX: Re-ablet to display logo
     this.generateLogo();
@@ -125,25 +135,28 @@ export class App extends Basic3 {
 
     for (let i=0; i < 80; i++) {
 
-      let x = 1*i-20;
+      let x = 3*i-20;
       let y = 12;
-      let z = +20;
+      let z = +10;
 
-      let lhs = RandomNeonLight();
-      lhs.rotation.x = Math.PI/2;
-      lhs.rotation.y = Math.PI/2;
-      lhs.rotation.z = 0;
+      let lhs_key = RandomElement(this.meshes);
+      let lhs = this.meshes[lhs_key];
+      lhs.position.set(x, RandomNumber(12, 13), z);
+      // console.log(lhs.position);
+      // let lhs = RandomNeonLight();
+      // lhs.rotation.x = Math.PI/2;
+      // lhs.rotation.y = Math.PI/2;
+      // lhs.rotation.z = 0;
 
       lhs.position.set(x, RandomNumber(7, 12), z);
 
-      let rhs = RandomNeonLight();
-      rhs.rotation.x = Math.PI/2;
-      rhs.rotation.y = Math.PI/2;
-      rhs.rotation.z = 0;
+      let rhs_key = RandomElement(this.meshes);
+      let rhs = this.meshes[rhs_key];
       rhs.position.set(x, RandomNumber(9, 15), -z);
 
-      this.scene.add(lhs);
-      this.scene.add(rhs);
+      // console.log(lhs);
+      this.scene.add(lhs.clone());
+      this.scene.add(rhs.clone());
 
     }
   }
@@ -187,10 +200,29 @@ export class App extends Basic3 {
 
     const gltfLoader = new GLTFLoader();
 
-    gltfLoader.load("static/trax.gltf", function (gltf) {
-      gltf.scene.position.set(this.target.x, this.target.y, this.target.z);
-      gltf.scene.rotation.y = -Math.PI/2;
-      const s = 3.0;
+    // Get the entire scene
+    gltfLoader.load("static/fruit.gltf", (gltf) => {
+      gltf.scene.scale.set(10, 10, 10);
+      gltf.scene.children.forEach((v) => {
+        console.log("Loaded:", v.name);
+        v.children.forEach((u) => {
+          u.material = new THREE.MeshBasicMaterial({ color: RandomColor() });
+        });
+        v.position.set(0, 0, 0);
+        v.scale.set(2, 10, 10);
+
+        this.meshes[v.name] = v.clone();
+      });
+
+      console.log(this.meshes.cherry);
+
+      this.generateNeon();
+    });
+
+    gltfLoader.load("static/trax.gltf", (gltf) => {
+      gltf.scene.position.set(this.target.x-20.0, this.target.y, this.target.z);
+      gltf.scene.rotation.y = -Math.PI / 2;
+      const s = 1.0;
       gltf.scene.scale.set(s, s, s);
 
       gltf.scene.children[0].children.forEach((v) => {
@@ -204,20 +236,20 @@ export class App extends Basic3 {
 
       this.thing = gltf.scene;
       scene.add(gltf.scene);
-    }.bind(this));
+    });
   }
 
   move({ x, y }) {
     // this.target.y = 0.0 + y * 6;
     // this.target.z = 0.0 + x * 6;
   }
-  
+
   resize(w, h) {
     this.renderer.setSize(w, h);
 
     this.camera = new THREE.PerspectiveCamera(
       75,
-      w/h,
+      w / h,
       0.1,
       3000,
     );
@@ -225,20 +257,20 @@ export class App extends Basic3 {
   }
 
   resizeFunction(container) {
-    return function() {
+    return function () {
       const el = document.getElementById("nav");
 
-      let h = Math.floor(el.offsetHeight)-1 ;
+      let h = Math.floor(el.offsetHeight) - 1;
 
       if (h < 0) {
         h = window.innerHeight / 2;
       }
 
-      if (window.innerWidth/window.innerHeight > 2.0) {
+      if (window.innerWidth / window.innerHeight > 2.0) {
         h = window.innerHeight;
       }
 
-      this.resize(Math.floor(el.offsetWidth-1), h);
+      this.resize(Math.floor(el.offsetWidth - 1), h);
       // this.resize(window.innerWidth, window.innerHeight/2.0);
     }.bind(this);
   }
@@ -254,7 +286,6 @@ export class App extends Basic3 {
   pointerUp(ev) {
     ev.srcElement.style.cursor = "grab";
     this.dragging = false;
-    console.log("UP");
   }
 
   pointerMove(ev) {
@@ -263,8 +294,8 @@ export class App extends Basic3 {
       let x = ev.clientX;
       let y = ev.clientY;
 
-      this.dx = (x-this.mousePos[0]) / 888.;
-      this.dy = (y-this.mousePos[1]) / 888.;
+      this.dx = (x - this.mousePos[0]) / 888.;
+      this.dy = (y - this.mousePos[1]) / 888.;
     }
   }
 
@@ -290,14 +321,14 @@ export class App extends Basic3 {
     }
 
     if (this.logo) {
-      this.logo.rotation.x = -1*t;
-      this.logo.rotation.y = +3*t;
-      this.logo.rotation.z = -2*t;
+      this.logo.rotation.x = -1 * t;
+      this.logo.rotation.y = +3 * t;
+      this.logo.rotation.z = -2 * t;
 
-      let u = 3*t;
-      this.ring.rotation.x = -1*u;
-      this.ring.rotation.y = +3*u;
-      this.ring.rotation.z = -2*u;
+      let u = 3 * t;
+      this.ring.rotation.x = -1 * u;
+      this.ring.rotation.y = +3 * u;
+      this.ring.rotation.z = -2 * u;
     }
   }
 
